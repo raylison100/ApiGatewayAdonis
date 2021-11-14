@@ -1,0 +1,3 @@
+include:
+  - project: 'devops/pipelines'
+    file: 'teladoc.yml'

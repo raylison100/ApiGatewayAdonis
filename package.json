@@ -1,0 +1,45 @@
+{
+  "name": "adonis-api-app",
+  "version": "4.1.0",
+  "adonis-version": "4.1.0",
+  "description": "Adonisjs boilerplate for API server with pre-configured JWT",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "adonis serve --dev",
+    "test": "node ace test"
+  },
+  "keywords": [
+    "adonisjs",
+    "adonis-app"
+  ],
+  "author": "Danyllo Ferreira",
+  "license": "LICENSED",
+  "private": true,
+  "dependencies": {
+    "@adonisjs/ace": "^5.0.2",
+    "@adonisjs/antl": "^2.0.7",
+    "@adonisjs/auth": "^3.0.5",
+    "@adonisjs/bodyparser": "^2.0.3",
+    "@adonisjs/cors": "^1.0.6",
+    "@adonisjs/fold": "^4.0.8",
+    "@adonisjs/framework": "^5.0.7",
+    "@adonisjs/http-logger": "^1.0.0",
+    "@adonisjs/ignitor": "^2.0.6",
+    "@adonisjs/mail": "^3.0.9",
+    "@adonisjs/redis": "^2.0.7",
+    "@adonisjs/validator": "^5.0.6",
+    "@adonisjs/websocket": "^1.0.12",
+    "@fortawesome/fontawesome-free": "^5.10.2",
+    "adonis-cache": "^0.3.4",
+    "lucid-mongo": "^3.1.2",
+    "moment": "^2.24.0",
+    "mysql": "^2.16.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.4",
+    "superagent": "^3.8.3"
+  },
+  "autoload": {
+    "App": "./app"
+  }
+}
