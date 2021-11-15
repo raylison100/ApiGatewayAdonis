@@ -1,5 +1,5 @@
 {
-  "name": "adonis-api-app",
+  "name": "Api Gateway",
   "version": "4.1.0",
   "adonis-version": "4.1.0",
   "description": "Adonisjs boilerplate for API server with pre-configured JWT",
@@ -13,7 +13,7 @@
     "adonisjs",
     "adonis-app"
   ],
-  "author": "Danyllo Ferreira",
+  "author": "Raylison Nunes",
   "license": "LICENSED",
   "private": true,
   "dependencies": {
