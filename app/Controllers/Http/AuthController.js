@@ -5,18 +5,6 @@ const User = use('App/Models/User');
  * AuthController
  */
 class AuthController {
-
-    /**
-     * register user
-     * @param request
-     * @param response
-     */
-    async register({request, response}) {
-        const data = request.only(['member_id', 'email', 'password']);
-        const user = await User.create(data);
-        return response.json(user);
-    }
-
     /**
      * authenticate Jwt
      * @param request
@@ -85,22 +73,40 @@ class AuthController {
      * @returns {Promise<Boolean|*>}
      */
     async create({ request, response, auth}) {
-        try {
-            const data     = request.only(['email', 'password']);
-            data.member_id = member.id;
+        try {            
+            const email = request.input("email")
+            const password = request.input("password")
+            const name = request.input("name")
+      
+            const userExists = await User.findBy('email', email)
+            if (userExists) {
+                return response.status(400).send({
+                    status: 'error',
+                    message: 'User already registered'
+                })
+            }
 
-            await User.create(data);
+            let user = new User()
+            user.email = email
+            user.password = password
+            user.fname = name
 
+            let success = await user.save()
             let token  = await auth.attempt(email, password);
-            let header = { Accept: 'application/json', Authorization: member.id };
-
-            this.sendGet(this.urlDestiny + '/members/send-sms', header);
-
-            return response.json(token);
-        
-        } catch (err) {
-        let error = err.error;
-        return response.status(422).send({ error });
+   
+            return response.status(201).json({
+                status: 'ok',
+                message: 'User is registered',
+                success: success,
+                UserID: user['_id'],
+                token: token
+            })    
+        } catch (error) {
+            console.log(error.message)
+            response.status(403).json({
+                status: 'error',
+                debug_error: error.message,
+            })
         }
     }
 
