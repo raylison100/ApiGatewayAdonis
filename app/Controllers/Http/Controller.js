@@ -1,6 +1,6 @@
 'use strict'
 const client = use('request-promise');
-const Cache  = use('Cache');
+const Cache = use('Cache');
 /**
  * ServiceController
  */
@@ -10,9 +10,9 @@ class Controller {
    * @param urlDestiny
    * @param prefix
    */
-  constructor({urlDestiny, prefix}) {
+  constructor({ urlDestiny, prefix }) {
     this.urlDestiny = urlDestiny;
-    this.prefix     = prefix;
+    this.prefix = prefix;
   }
 
   /**
@@ -25,14 +25,13 @@ class Controller {
     try {
       const url = this.urlDestiny + request.originalUrl().replace(this.prefix, '');
 
-
       if (request.method() === 'GET') {
-        return await this.sendGet(url,{Accept: 'application/json'})
+        return await this.sendGet(url, { Accept: 'application/json' })
       } else {
-        return await this.send(url,request.method(),{Accept: 'application/json'},request.body)
+        return await this.send(url, request.method(), { Accept: 'application/json' }, request.body)
       }
     } catch (error) {
-
+      console.log(error)
       return response.status(error.statusCode).send({
         ...error,
         status: error.statusCode,
@@ -52,15 +51,15 @@ class Controller {
       const url = this.urlDestiny + request.originalUrl().replace(this.prefix, '');
 
       if (request.method() === 'GET') {
-        return await Cache.remember(url, 42, async() => {
-          return await this.sendGet(url,{Accept: 'application/json'});
+        return await Cache.remember(url, 42, async () => {
+          return await this.sendGet(url, { Accept: 'application/json' });
         });
       }
 
-      return await this.send(url,request.method(),{Accept: 'application/json'}, request.body)
+      return await this.send(url, request.method(), { Accept: 'application/json' }, request.body)
     } catch (err) {
       let error = err.error;
-      return response.status(err.statusCode).send({error});
+      return response.status(err.statusCode).send({ error });
     }
   }
 
@@ -75,16 +74,16 @@ class Controller {
       const url = this.urlDestiny + request.originalUrl().replace(this.prefix, '');
 
       if (request.method() === 'GET') {
-        this.sendGet(url,{Accept: 'application/json'})
+        this.sendGet(url, { Accept: 'application/json' })
       } else {
-        this.send(url,request.method(),{Accept: 'application/json'},request.body)
+        this.send(url, request.method(), { Accept: 'application/json' }, request.body)
       }
 
-      return response.status(200).send({error:false, message:'Enviado!'});
+      return response.status(200).send({ error: false, message: 'Enviado!' });
 
     } catch (err) {
       let error = err.error;
-      return response.status(err.statusCode).send({error});
+      return response.status(err.statusCode).send({ error });
     }
   }
 
@@ -94,9 +93,8 @@ class Controller {
    * @param header
    * @returns {Promise<*>}
    */
-  async sendGet(url, header)
-  {
-     return await client({method: 'GET', url: url, headers:header, json: true, rejectUnauthorized: false});
+  async sendGet(url, header) {
+    return await client({ method: 'GET', url: url, headers: header, json: true, rejectUnauthorized: false });
   }
 
   /**
@@ -107,9 +105,8 @@ class Controller {
    * @param body
    * @returns {Promise<*>}
    */
-  async send(url, method, header, body)
-  {
-     return await client({method: method, url: url, headers: header, body: body, json: true, rejectUnauthorized: false});
+  async send(url, method, header, body) {
+    return await client({ method: method, url: url, headers: header, body: body, json: true, rejectUnauthorized: false });
   }
 }
 
